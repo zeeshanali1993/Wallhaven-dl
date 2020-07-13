@@ -92,7 +92,6 @@ def artist():
 
     BASEURL = 'https://wallhaven.cc/api/v1/search?apikey=' + APIKEY + '&q=id:' + artistId + "&categories=" +\
         ctag + '&purity=' + ptag + '&sorting=' + sortingType + '&order=' + sortingOrder + '&page='
-    print(BASEURL)
 
 
 def category():
