@@ -22,7 +22,78 @@ BASEURL=""
 cookies=dict()
 
 global APIKEY
-APIKEY = "EnterYourAPIKeyHere"
+APIKEY = "YOURAPIKEY"
+
+def artist():
+    global BASEURL
+    print('''
+    ****************************************************************
+                            Category Codes
+
+    all     - Every wallpaper.
+    general - For 'general' wallpapers only.
+    anime   - For 'Anime' Wallpapers only.
+    people  - For 'people' wallapapers only.
+    ga      - For 'General' and 'Anime' wallapapers only.
+    gp      - For 'General' and 'People' wallpapers only.
+    ****************************************************************
+    ''')
+    ccode = input('Enter Category: ').lower()
+    ctags = {'all':'111', 'anime':'010', 'general':'100', 'people':'001', 'ga':'110', 'gp':'101' }
+    ctag = ctags[ccode]
+
+    print('''
+    ****************************************************************
+                            Purity Codes
+
+    sfw     - For 'Safe For Work'
+    sketchy - For 'Sketchy'
+    nsfw    - For 'Not Safe For Work'
+    ws      - For 'SFW' and 'Sketchy'
+    wn      - For 'SFW' and 'NSFW'
+    sn      - For 'Sketchy' and 'NSFW'
+    all     - For 'SFW', 'Sketchy' and 'NSFW'
+    ****************************************************************
+    ''')
+    pcode = input('Enter Purity: ')
+    ptags = {'sfw':'100', 'sketchy':'010', 'nsfw':'001', 'ws':'110', 'wn':'101', 'sn':'011', 'all':'111'}
+    ptag = ptags[pcode]
+
+    sortingType = input('''Choose how you want to sort the images:
+
+    Enter "relevance" for downloading wallpapers sorted by relevance
+    Enter "random" for downloading wallpapers randomly
+    Enter "date_added" for downloading wallpapers sorted by date added
+    Enter "views" for downloading wallpapers sorted by number of views
+    Enter "favorites" for downloading wallpapers sorted by favorites
+    Enter "toplist" for downloading wallpapers sorted by toplist
+    Enter "toplist-beta" for downloading wallpapers sorted  by toplist beta
+
+    Enter choice: ''').lower()
+    while sortingType not in ['relevance', 'random', 'date_added','views', 'favorites', 'toplist','toplist-beta']:
+        if sortingType != None:
+            print('You entered an incorrect value.')
+        sortingType = input('Enter choice: ')
+
+    sortingOrder = input('''Choose the sorting order of your images:
+
+    Enter "asc" for downloading wallpapers sin ascending order
+    Enter "desc" for downloading wallpapers in descending order
+
+    Enter choice: ''').lower()
+    while sortingOrder not in ['asc', 'desc']:
+        if sortingOrder != None:
+            print('You entered an incorrect value.')
+        sortingOrder = input('Enter choice: ')
+
+
+
+    artistId = input('Enter artist id: ')
+
+    BASEURL = 'https://wallhaven.cc/api/v1/search?apikey=' + APIKEY + '&q=id:' + artistId + "&categories=" +\
+        ctag + '&purity=' + ptag + '&sorting=' + sortingType + '&order=' + sortingOrder + '&page='
+    print(BASEURL)
+
 
 def category():
     global BASEURL
@@ -106,14 +177,17 @@ def main():
     Enter "category" for downloading wallpapers from specified categories
     Enter "latest" for downloading latest wallpapers
     Enter "search" for downloading wallpapers from search
+    Enter "artist" for downloading wallpapers from artist
 
     Enter choice: ''').lower()
-    while Choice not in ['category', 'latest', 'search']:
+    while Choice not in ['category', 'latest', 'search','artist']:
         if Choice != None:
             print('You entered an incorrect value.')
         choice = input('Enter choice: ')
 
-    if Choice == 'category':
+    if Choice == 'artist':
+        artist()
+    elif Choice == 'category':
         category()
     elif Choice == 'latest':
         latest()
